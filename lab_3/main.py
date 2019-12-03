@@ -137,7 +137,7 @@ def initialisation(text: str, first_part: tuple) -> list:
     NANI_GRAM.calculate_log_probabilities()
     prefix = []
     for word in first_part:
-        prefix.append(real_storage.get_id_of(word))
+        prefix.append(REAL_STORAGE.get_id_of(word))
     result = NANI_GRAM.predict_next_sentence(tuple(prefix))
     return result
 
