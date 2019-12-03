@@ -80,8 +80,7 @@ class NGramTrie:
         basis = [elem[0:len(elem) - 1] for elem in self.gram_log_probabilities]
         basis = list(map(list, basis))
         sentence = []
-        if prefix in basis:
-            sentence.extend(prefix)
+        sentence.extend(prefix)
         while prefix in basis:
             where_to_find = {k: v for k, v in self.gram_log_probabilities.items() if tuple(prefix) == k[0:len(k) - 1]}
             most_frequent = list(where_to_find.items())
