@@ -30,10 +30,10 @@ class WordStorage:
             return -1
         return self.storage[word]
 
-    def get_original_by(self, id: int) -> str:
-        for k, v in self.storage.items():
-            if v == id:
-                return k
+    def get_original_by(self, identifier: int) -> str:
+        for key, value in self.storage.items():
+            if value == identifier:
+                return key
         return 'UNK'
 
     def from_corpus(self, corpus: tuple):
@@ -127,25 +127,25 @@ def split_by_sentence(text: str) -> list:
 
 def initialisation(text: str, first_part: tuple) -> list:
     size = len(first_part) + 1
-    nani_gram = NGramTrie(size)
+    NANI_GRAM = NGramTrie(size)
     split_text = split_by_sentence(text)
     for sentence in split_text:
-        real_storage.from_corpus(tuple(sentence))
-    corpus_in_code = encode(real_storage.storage, split_text)
+        REAL_STORAGE.from_corpus(tuple(sentence))
+    corpus_in_code = encode(REAL_STORAGE.storage, split_text)
     for sentence_in_code in corpus_in_code:
-        nani_gram.fill_from_sentence(tuple(sentence_in_code))
-    nani_gram.calculate_log_probabilities()
+        NANI_GRAM.fill_from_sentence(tuple(sentence_in_code))
+    NANI_GRAM.calculate_log_probabilities()
     prefix = []
     for word in first_part:
         prefix.append(real_storage.get_id_of(word))
-    result = nani_gram.predict_next_sentence(tuple(prefix))
+    result = NANI_GRAM.predict_next_sentence(tuple(prefix))
     return result
 
 
 def decoding(sentence_in_code: tuple) -> str:
     real_sentence = []
     for number in sentence_in_code:
-        real_sentence.append(real_storage.get_original_by(number))
+        real_sentence.append(REAL_STORAGE.get_original_by(number))
     if real_sentence:
         real_sentence = list(real_sentence)
         if '<s>' in real_sentence:
@@ -161,7 +161,7 @@ def decoding(sentence_in_code: tuple) -> str:
     return ''
 
 
-real_storage = WordStorage()
+REAL_STORAGE = WordStorage()
 encoded_list = initialisation(REFERENCE_TEXT, ('<s>', 'sherlock', 'holmes'))
 to_print = decoding(tuple(encoded_list))
 print(to_print)
