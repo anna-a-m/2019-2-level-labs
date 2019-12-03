@@ -127,18 +127,18 @@ def split_by_sentence(text: str) -> list:
 
 def initialisation(text: str, first_part: tuple) -> list:
     size = len(first_part) + 1
-    NANI_GRAM = NGramTrie(size)
+    Nani_Gram = NGramTrie(size)
     split_text = split_by_sentence(text)
     for sentence in split_text:
         REAL_STORAGE.from_corpus(tuple(sentence))
     corpus_in_code = encode(REAL_STORAGE.storage, split_text)
     for sentence_in_code in corpus_in_code:
-        NANI_GRAM.fill_from_sentence(tuple(sentence_in_code))
-    NANI_GRAM.calculate_log_probabilities()
+        Nani_Gram.fill_from_sentence(tuple(sentence_in_code))
+    Nani_Gram.calculate_log_probabilities()
     prefix = []
     for word in first_part:
         prefix.append(REAL_STORAGE.get_id_of(word))
-    result = NANI_GRAM.predict_next_sentence(tuple(prefix))
+    result = Nani_Gram.predict_next_sentence(tuple(prefix))
     return result
 
 
@@ -162,6 +162,6 @@ def decoding(sentence_in_code: tuple) -> str:
 
 
 REAL_STORAGE = WordStorage()
-encoded_list = initialisation(REFERENCE_TEXT, ('<s>', 'sherlock', 'holmes'))
-to_print = decoding(tuple(encoded_list))
-print(to_print)
+ENCODED_LIST = initialisation(REFERENCE_TEXT, ('<s>', 'sherlock', 'holmes'))
+TO_PRINT = decoding(tuple(ENCODED_LIST))
+print(TO_PRINT)
