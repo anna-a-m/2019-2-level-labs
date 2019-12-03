@@ -13,7 +13,8 @@ if __name__ == '__main__':
 
 class WordStorage:
     def put(self, word: str) -> int:
-        pass
+        if not isinstance(word, str):
+            return -1
 
     def get_id_of(self, word: str) -> int:
         pass
