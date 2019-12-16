@@ -128,7 +128,7 @@ class TfIdfCalculator:
         scalar_product = [first_vector[i] * second_vector[i] for i in range(len(first_vector))]
         first_norm = [i ** 2 for i in first_vector]
         second_norm = [j ** 2 for j in second_vector]
-        cos_distance = sum(scalar_product) / (sum(first_norm) * sum(second_norm))
+        cos_distance = sum(scalar_product) / math.sqrt(sum(first_norm) * sum(second_norm))
         return cos_distance
 
 
