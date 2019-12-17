@@ -42,6 +42,7 @@ class TfIdfCalculator:
                 if word not in doc_dict:
                     doc_dict[word] = doc.count(word) / len(clean_doc)
             self.tf_values.append(doc_dict)
+        return self.tf_values
 
     def calculate_idf(self):
         if not isinstance(self.corpus, list):
@@ -55,6 +56,7 @@ class TfIdfCalculator:
         for word in words:
             frequency = [1 for doc in clean_corpus if isinstance(doc, list) and word in doc]
             self.idf_values[word] = math.log(len(clean_corpus) / sum(frequency))
+        return self.idf_values
 
     def calculate(self):
         if not isinstance(self.tf_values, list):
@@ -67,6 +69,7 @@ class TfIdfCalculator:
                 else:
                     return []
             self.tf_idf_values.append(new_doc_dict)
+        return self.tf_idf_values
 
     def report_on(self, word, document_index):
         if self.tf_idf_values is None or document_index > len(self.tf_idf_values) - 1 or \
@@ -138,10 +141,10 @@ if __name__ == '__main__':
         with open(text, 'r') as f:
             REFERENCE_TEXTS.append(f.read())
     # scenario to check your work
-    test_texts = clean_tokenize_corpus(REFERENCE_TEXTS)
-    tf_idf = TfIdfCalculator(test_texts)
-    tf_idf.calculate_tf()
-    tf_idf.calculate_idf()
-    tf_idf.calculate()
-    print(tf_idf.report_on('good', 0))
-    print(tf_idf.report_on('and', 1))
+    TEST_TEXTS = clean_tokenize_corpus(REFERENCE_TEXTS)
+    TF_IDF = TfIdfCalculator(TEST_TEXTS)
+    TF_IDF.calculate_tf()
+    TF_IDF.calculate_idf()
+    TF_IDF.calculate()
+    print(TF_IDF.report_on('good', 0))
+    print(TF_IDF.report_on('and', 1))
